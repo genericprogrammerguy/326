@@ -1,6 +1,7 @@
 # Class Node
 # Class LinkedList -> Insert, delete, push_front, pop_front, push_back, pop_back
 from tkinter import *
+#from js2py import *
 
 
 class Node:
@@ -50,9 +51,14 @@ class LinkedList:
             node.next = self.front
             self.front = node
             self.length += 1
+         #   to_display=push_front.get()
+         #   label_front=Label(window)
+         #   label_front["input"]=to_display
+         #   label_front.grid(row=12,column=12)
+         #   to_display.pack()
          #   print("push")
-            print(push_value.get())
-            t1.insert(END, value())
+         #    print(push_value.get())
+         #    t1.insert(END, value())
 
 
     def pop_front(self):
@@ -74,7 +80,7 @@ class LinkedList:
             self.length += 1
        #     print("push")
 
-    def pop_back(self):
+    def pop_back(self, value):
         if self.length > 0:
             head = self.front
             for _ in range(self.length-2):
@@ -94,51 +100,77 @@ class LinkedList:
 
 class Draw:
         def __init__(self, object):
-            self.label = Label(object, text="Link List Magic")
-            self.label.grid(column=0, row=0)
+            self.label = Label(object, text="Link List Magic", font=("Helventica", 34), anchor=CENTER, relief=RAISED)
+            self.label.grid(column=1, row=0)
+
+class Add:
+        def __init__(self):
+            add = Button(window, width='20', height="3", text="Add", command=ll.push_front('%s'))
+            add.grid(row=1, column=0)
+            push_value = StringVar()
+            entry_push = Entry(window, textvariable=push_value)
+            entry_push.grid(row=1, column=1)
+
+class Pop:
+        def __init__(self):
+            pop = Button(window, text="Pop", command=ll.pop_back('%s'))
+            pop.grid(row=2, column=0)
+            entry_pop = Entry(window)
+            entry_pop.grid(row=2, column=1)
+
+class Push:
+        def __init(self):
+            push_back = Button(window, text="Push", command=ll.push_back('%s'))
+            push_back.grid(row=3, column=0)
+            entry_pb=Entry(window)
+            entry_pb.grid(row=3, column=1)
 
 # main
 if __name__ =='__main__':
     window = Tk()
+    window.title("link list Magic")
     ll = LinkedList()
 
     app = Draw(window)
+    add = Add()
+    pop = Pop()
+    push = Push()
 
-    push = Button(window, text="Add", command=ll.push_front(1))
-    push.grid(row=1, column=0)
-
-    push_value = StringVar()
-    enter_push=Entry(window,textvariable=push_value)
-    enter_push.grid(row=1, column=1)
+    # for the Add button
+  #  add = Button(window, width='20',height="3", text="Add", command=ll.push_front(1))
+  #  add.grid(row=1, column=0)
+  #  push_value = StringVar()
+  #  entry_push=Entry(window,textvariable=push_value)
+  #  entry_push.grid(row=1, column=1)
 
     t1=Text(window,height=1,width=20)
     t1.grid(row=0,column=2)
 
- #   pop = Button(window, text="Pop", command=ll.pop_back())
- #   pop.grid(row=2, column=0)
- #   enter_pop=Entry(window)
- #  enter_pop.grid(row=2, column=1)
+    # for the pop button
+  #  pop = Button(window, text="Pop", command=ll.pop_back())
+  #  pop.grid(row=2, column=0)
+  # entry_pop=Entry(window)
+  #  entry_pop.grid(row=2, column=1)
 
- #   push_back = Button(window, text="Push", command=ll.push_back(88))
- #   push_back.grid(row=3, column=0)
- #   enter_pb=Entry(window)
- #   enter_pb.grid(row=3, column=1)
+   # for the push button
+   # push_back = Button(window, text="Push", command=ll.push_back(88))
+   # push_back.grid(row=3, column=0)
+   # entry_pb=Entry(window)
+   # entry_pb.grid(row=3, column=1)
 
     window.mainloop()
+    lltest = LinkedList()
+    lltest.push_front(1)
+    lltest.push_front(4) # 4 -> 1
 
-
-
-   # ll.push_front(1)
-   # ll.push_front(4) # 4 -> 1
-   # ll.push_front(3)
-   # ll.push_front(3)
-   # ll.push_front(3)
-   # ll.insert_after(0,2)
-   # ll.insert_after(0,5)
-   # ll.delete_after(0)
-   # ll.print_list()
+    lltest.push_front(3)
+    lltest.push_front(3)
+    lltest.push_front(3)
+    lltest.insert_after(0,2)
+    lltest.insert_after(0,5)
+    lltest.print_list() # 3 -> 5 -> 2 -> 3 -> 3 -> 4 ->1 -> NULL
    # ll.delete_after(1)
-    # ll.delete(4)
+   # ll.delete(4)
    # ll.print_list() # 3 -> 3 -> 3 -> 4 -> 1 -> NULL |||| # 3 -> 5 -> 2 -> 3 -> 3 -> 4 -> 1 -> NULL
    # ll.push_back(88)
    # ll.print_list()
