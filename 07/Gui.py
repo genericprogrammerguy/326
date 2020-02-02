@@ -4,12 +4,12 @@ from tkinter import *
 # from js2py import *
 
 class Node:
-    def __init__(self, value: object) -> object:
+    def __init__(self, value):
         self.value = value
         self.next = None
 
 class LinkedList:
-    def __init__(self) -> object:
+    def __init__(self):
         self.front = None
         self.end = None
         self.length = 0
@@ -92,7 +92,7 @@ class LinkedList:
     def print_list(self):
         head = self.front
         while (head is not None):
-            print(head.value, "-> ", end='')
+            #print(head.value, "-> ", end="end")
             head = head.next
         print("NULL")
 
@@ -101,6 +101,7 @@ class DrawLine:
         self.canvas=Canvas(window, width=width, height=height, bg=colour)
         self.canvas.grid(row=row, column=column)
         self.canvas.bind('<Button-1>', self.draw_line)
+        self.canvas.bind('<Button-1>', self.add)
         self.click=0
         self.x1=0
         self.y1=0
@@ -118,24 +119,26 @@ class DrawLine:
             self.canvas.create_line(self.x1, self.y1, self.x2, self.y2, fill='black', width=10)
             self.click=0
 
-    def add(self):
-                add = Button(window, width='20', height="3", text="Add")
+    def add(self, event):
+                add = Button(window, width='20', height="3", text="Add", command=insert_after)
                 add.grid(row=1, column=0)
                 push_value = StringVar()
+                add.bind('<Button-1>', ll.insert_after())
+
                 entry_push = Entry(window, textvariable=push_value)
                 entry_push.grid(row=1, column=1)
 
-    def pop(self):
-                pop = Button(window, text="Pop")
+    def pop(self, event):
+                pop = Button(window, text="Pop", command=pop_front())
                 pop.grid(row=2, column=0)
-                entry_pop = Entry(window)
-                entry_pop.grid(row=2, column=1)
+                #entry_pop = Entry(window)
+                #entry_pop.grid(row=2, column=1)
 
-    def push(self):
-                push_back = Button(window, text="Push")
+    def push(self, event):
+                push_back = Button(window, text="Push", command=push_front())
                 push_back.grid(row=3, column=0)
-                entry_pb = Entry(window)
-                entry_pb.grid(row=3, column=1)
+                #entry_pb = Entry(window)
+                #entry_pb.grid(row=3, column=1)
 
 # main
 if __name__ == '__main__':
