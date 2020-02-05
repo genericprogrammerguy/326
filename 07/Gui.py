@@ -98,53 +98,65 @@ class LinkedList:
             head = head.next
         print("NULL")
 
-class AppWindow:
+class AppWindow(Frame, ):
     def add(self):
-            input_1 = Entry(window)
-            input_1.grid(row=1, column=2)
-            add = Button(window, width='20', height="3", text="Add", command=LinkedList.push_front)
-            add.grid(row=1, column=0)
+            self.input_1 = Entry(window)
+            self.input_1.grid(row=1, column=2)
+            self.add = Button(window, width='20', height="3", text="Add", command=LinkedList.push_front)
+            self.add.grid(row=1, column=0)
             #print("Number: %s" % (entry_push.get()))
 
     def pop(self):
-            pop = Button(window, text="Pop", command=LinkedList.pop_front)
-            pop.grid(row=2, column=0)
+            self.pop = Button(window, text="Pop", command=LinkedList.pop_front)
+            self.pop.grid(row=2, column=0)
             #entry_pop = Entry(window)
             #entry_pop.grid(row=2, column=1)
 
     def push(self):
-            push_back = Button(window, text="Push", command=LinkedList.push_front)
-            push_back.grid(row=3, column=0)
+            self.push_back = Button(window, text="Push", command=LinkedList.push_front)
+            self.push_back.grid(row=3, column=0)
             #entry_pb = Entry(window)
             #entry_pb.grid(row=3, column=1)
 
-    def DrawLine(self,window, width, height, colour, row, column):
-            self.canvas=Canvas(window, width=width, height=height, bg=colour)
-            self.canvas.grid(row=row, column=column)
-            self.canvas.bind('<Button-1>', self.draw_line)
-            self.canvas.bind('<Button-1>', self.add)
-            self.click=0
-            self.x1=0
-            self.y1=0
-            self.x2=0
-            self.y2=0
+    def display_num(self):
+            self.user_input = Label(window)
+            self.user_input.grid(window,row = 3, column=3)
 
-    def draw_line(self, event):
-            if self.click ==0:
-                self.x1=event.x
-                self.y1=event.y
-                self.click=1
-            else:
-                self.x2=event.x
-                self.y2=event.y
-                self.canvas.create_line(self.x1, self.y1, self.x2, self.y2, fill='black', width=10)
-                self.click=0
+    #def DrawLine(self,window, width, height, colour, row, column):
+            #self.canvas=Canvas(window, width=width, height=height, bg=colour)
+            #self.canvas.grid(row=row, column=column)
+            #self.canvas.bind('<Button-1>', self.draw_line)
+            #self.canvas.bind('<Button-1>', self.add)
+            #self.click=0
+            #self.x1=0
+            #self.y1=0
+            #self.x2=0
+            #self.y2=0
+
+    #def draw_line(self, event):
+            #if self.click ==0:
+                #self.x1=event.x
+               # self.y1=event.y
+                #self.click=1
+           # else:
+               # self.x2=event.x
+               # self.y2=event.y
+               # self.canvas.create_line(self.x1, self.y1, self.x2, self.y2, fill='black', width=10)
+               # self.click=0
+
+
 
 if __name__ == '__main__':
     window = Tk()
     window.title("link list Magic")
-    mainWin = AppWindow()
+    mainWin = Canvas( width =300, height=400)
+    mainWin =AppWindow(window, width =300, height=400)
+   # mainWin.create_rectangle(window,33,33,33,fill="blue")
     mainWin.add()
+    mainWin.pop()
+    mainWin.push()
+
+    #mainWin.display_num()
 #    mainWin.push()
 #    mainWin.pop()
 #    mainWin.DrawLine(window, 300, 400, 'white',0, 0)
