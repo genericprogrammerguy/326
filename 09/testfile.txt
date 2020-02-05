@@ -1,0 +1,51 @@
+A
+
+A
+AA
+A B
+
+A B
+AB
+A B
+AB BA
+A B C
+AB
+A B C
+BA
+A B C
+AC
+A B C
+BC
+A B C
+CA
+A B C
+CB
+A B C
+AB AC
+A B C
+AB BA
+A B C
+AB CA
+A B C
+AB BC
+A B C
+AB CB
+A B C
+BA AC
+A B C
+BA CA
+A B C
+BA AB
+A B C
+BA CB
+A B C
+BA BC
+A B C
+AB BA AC CA BC CB
+A B C
+AB AC BC
+A B C
+AB AC BC CA
+A B C D E
+AB BC CA DC DE ED
+&Q
