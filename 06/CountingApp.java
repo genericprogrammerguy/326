@@ -1,16 +1,29 @@
+/* File: CountingApp.java - Jan 2020 */
+
 import java.util.*;
+
+/**
+A basic computer program which takes an input of 64-bit integers computes the value of (f) for given n and k
+ then outputs a 64-bit interger.
+ **For example:**
+ Output for the value of
+ (n k) = (52 5) = 52! / 5!(52−5)! = 2598960
+ */
 
 //May be run with input from file, for example using java CountingApp < testfile.txt
 public class CountingApp {
-
+    /**
+     * Runs the main program and takes input from [system.in] check for a number of exception
+     *
+     * @param args An array of strings which stores arguments passed by command line while starting a program.
+     */
     public static void main( String[] args ) {
         CountingApp ca = new CountingApp();
         Scanner sc = new Scanner(System.in);
         String temp1 = "";
         System.err.println("Enter integers n and k to compute (n choose k):");
         while (sc.hasNext()) {
-            long k = 0;
-            long n = 0;
+            long n,k = 0;
             boolean skip = false;
             String skipped = "";
             try {
@@ -64,8 +77,18 @@ public class CountingApp {
             }
         }
     }
-
-
+    /**
+     * Takes 2 longs (n and k) and preforms the main calculation
+     * returns a string representation of the argument as an unsigned decimal value. The unsigned quotient of dividing the
+     * first argument by the second where each argument and the result is interpreted as an unsigned value. Then returns
+     * the unsigned remainder from dividing the first argument by the second where each argument and the result is
+     * interpreted as an unsigned value and then compares the  two long values numerically. Parses the string argument
+     * as an unsigned decimal long and returns a string.
+     *
+     * @param n the value of n in the above formula
+     * @param k the value of k in the above formula
+     * @return the answer of the above equation
+     */
     public String calculate( long n, long k ) {
         Map<Long, Integer> tally_factors = new HashMap<Long, Integer>(); //Long for factors (key), Integer for tally (value)
         if (k == n || k == 0) {
@@ -74,23 +97,16 @@ public class CountingApp {
         else if (k == 1 || k == n - 1) {
             return Long.toUnsignedString(n);
         }
-        else if ((k == 2 || k == n - 2) && Long.divideUnsigned(n, 2) < (Long.divideUnsigned(1 + Long.MAX_VALUE * 2, (n - 1)))) {
-            //System.err.println(Long.divideUnsigned(n,2) + " < " + Long.divideUnsigned(1+Long.MAX_VALUE*2, (n-1)));
+        else if ((k == 2 || k == n - 2) && Long.divideUnsigned(n, 2) < (Long.divideUnsigned(1 + Long.MAX_VALUE * 2, (n - 1))))
             String answer = "";
             long result = 0;
             if (Long.remainderUnsigned(n, 2) == 0) {
                 result = Long.divideUnsigned(n, 2);
-                //System.err.println(result + "from n/2");
-                //System.err.println(multiplyLong(result, (n-1)));
                 answer = multiplyLong(result, (n - 1));
-                //System.err.println(result);
             }
             else {
                 result = Long.divideUnsigned(n - 1, 2);
-                //System.err.println(result +"from (n-1)/2");
-                //System.err.println(multiplyLong(result, n));
                 answer = multiplyLong(result, n);
-                //System.err.println(result);
             }
             return answer;
         }
@@ -201,7 +217,6 @@ public class CountingApp {
                         part1 = Long.divideUnsigned(part1, gcdByEuclidsAlgorithm(part1, part2));
                         part2 = Long.divideUnsigned(part2, gcdByEuclidsAlgorithm(part1, part2));
                     }
-
                     result = Long.parseUnsignedLong(multiplyLong(result, part1)); //top of fraction
                     part3 = Long.parseUnsignedLong(multiplyLong(part3, part2));
                     result = Long.divideUnsigned(result, gcdByEuclidsAlgorithm(result, part3));
@@ -214,9 +229,16 @@ public class CountingApp {
             return "error: result is greater than 64 bits - maximum result is (2^64)-1";
         }
     }
-
-
-    public String multiplyLong( long x, long y ) { //adapted from https://stackoverflow.com/questions/35260827/implementing-multiplication-algorithm-in-java
+    /**
+     * Takes 2 longs (x and y) and returns the product of multpilying them together one digit at a time, since the
+     * answer may be greater than the maximum size for a signed long. The answer is then stored in an array of digits
+     * and then returned as String,
+     *
+     * @param x is the first value
+     * @param y is the second value
+     * @return String
+     */
+    public String multiplyLong( long x, long y ) {
         int carry = 0;
         int temp = 0;
         String answer = "";
@@ -224,7 +246,6 @@ public class CountingApp {
         List<Integer> digitsy = new ArrayList<Integer>();
         int m = Long.toUnsignedString(x).length();
         int n = Long.toUnsignedString(y).length();
-        //System.err.println("m = " + m);
         int[] result = new int[m + n];
         for (int k = m - 1; k >= 0; k--) {
             digitsx.add(Character.getNumericValue(Long.toUnsignedString(x).charAt(k)));
@@ -242,17 +263,17 @@ public class CountingApp {
             }
             result[i + m] = carry;
         }
-        //System.err.println(Arrays.toString(result));
-        //System.err.println(Integer.toString(result[1]));
         for (int k = n + m - 1; k >= 0; k--) {
-            //System.err.println("digit " + (n+m-k) + " = " + String.valueOf(result[k]));
             answer += String.valueOf(result[k]);
         }
-        //System.err.println(answer);
         return answer;
     }
-
-
+    /**
+     * A support function that takes in a string and returns true,false as to weather it is a digit
+     *
+     * @param s is the String representation
+     * @return boolean if input is a digit
+     */
     public boolean isAllDigit( String s ) {
         for (char c : s.toCharArray()) {
             if (!(Character.isDigit(c))) {
@@ -261,9 +282,14 @@ public class CountingApp {
         }
         return true;
     }
-
-
-    public long gcdByEuclidsAlgorithm( long n1, long n2 ) { //adapted from https://www.baeldung.com/java-greatest-common-divisor
+    /**
+     * A support function that takes 2 longs and finds the greatest common divisor(gcd) and returns a long
+     *
+     * @param n1 factor 1
+     * @param n2 factor 2
+     * @return long the gcd
+     */
+    public long gcdByEuclidsAlgorithm( long n1, long n2 ) {
         if (n2 == 0) {
             return n1;
         }
