@@ -23,7 +23,8 @@ public class CountingApp {
         String temp1 = "";
         System.err.println("Enter integers n and k to compute (n choose k):");
         while (sc.hasNext()) {
-            long n,k = 0;
+            long n = 0;
+            long k = 0;
             boolean skip = false;
             String skipped = "";
             try {
@@ -97,7 +98,7 @@ public class CountingApp {
         else if (k == 1 || k == n - 1) {
             return Long.toUnsignedString(n);
         }
-        else if ((k == 2 || k == n - 2) && Long.divideUnsigned(n, 2) < (Long.divideUnsigned(1 + Long.MAX_VALUE * 2, (n - 1))))
+        else if ((k == 2 || k == n - 2) && Long.divideUnsigned(n, 2) < (Long.divideUnsigned(1 + Long.MAX_VALUE * 2, (n - 1)))) {
             String answer = "";
             long result = 0;
             if (Long.remainderUnsigned(n, 2) == 0) {
