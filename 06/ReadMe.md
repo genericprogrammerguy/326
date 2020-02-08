@@ -1,75 +1,85 @@
-[ReadMe] Étude 7 - Graphical User Interface 
+[ReadMe] Étude 6 - Counting it Up 
 ===
 **Authors:** Nathaniel Price, Stefan Walker
-**Date:** 06/02/2020
-**version** 1.0 
+**Date:** 04/02/2020
+**Version:** 1.0
+**Git:** [5c4ba0b](https://github.com/non-emulated-programmer/326/commit/5c4ba0bf684e2d3b910a6431f77135e703e5f225)
+
 
 
 ## Introduction
-To build and implement a Graphical User Interface(GUI) which gives a visualisation of the operations performed on the chosen data structure to aid other students in the understanding of the chosen data structure. Excellent existing examples can be found at the [University of San Francisco](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html).
+----
+This is a basic computer program which takes an input of 64-bit integers computes the value of (f) for given n and k, and then outputs a 64-bit interger. 
 
+**For example:**
+Output for the value of 
+(n k) = (52 5) = 52! / 5!(52−5)! = 2598960
+ 
 
-The data structure we have chosen is a [linked list](https://en.wikipedia.org/wiki/Linked_list).
+It contains the following files:
+* CountingApp.java
+* CountingApp.class
+* testfile.txt
 
-## Activity Log
-Tue, 28 Jan - Design and Planning | Stefan
-Thu, 30 Jan- Planning | Stefan
-Sun, 2 Feb - Coding | Stefan
-Tue, 4 Feb - Coding | Stefan
-Wed, 5 Feb - Coding | Stefan
-Thu, 6 Feb - Coding | Nathaniel
-Thu, 6 Feb - ReadMe | Stefan
+## Actvity Log
+Tue, 21 Jan - Research| Stefan
+Mon, 27 Jan - Workings | Stefan & Nathaniel
+Sat, 01 Feb - Coding | Nathaniel
+Sun, 02 Feb - Coding | Nathaniel
+Tue, 04 Feb - Testing | Stefan & Nathaniel
+Tue, 04 Feb - ReadMe | Stefan
+Wed, 05 Feb - Refactoring | Stefan
 
-## Running the Program 
-To run from terminal, type the following into the terminal:
+## Running the program 
+---
+Unzip the file
+
+Then to run this program cd into the directory containing the files. 
+
+Then run the following terminal command:
 
 ```
-$python3 Gui.py
+java CountingApp
 ```
-Alternatively, to run from IDLE3.5 (Python), type the following into the terminal:
+Running the following command: 
+
 ```
-$IDLE3.5 Gui.py
+java CountingApp < testfile.txt
 ```
-Then, once the code has opened in IDLE, press F5 to run the program.
+will pass testfile.txt into the program  
+
+testfile.txt contains a number of inputs which test the program for a number of different inputs
 
 ## Methods
-The methods to implement include in the Linked list include:  
--[Push](https://https://www.geeksforgeeks.org/linkedlist-push-method-in-java/) 
--[Pop](https://https://www.geeksforgeeks.org/linkedlist-pop-method-in-java/)
--[Search](https://www.geeksforgeeks.org/search-an-element-in-a-linked-list-iterative-and-recursive)(value)
--Traverse(index)
--Add(After)
--[Delete](https://https://www.geeksforgeeks.org/write-a-function-to-delete-a-linked-list/)
+### public static void main 
+Runs the main program and takes input from [system.in](https://docs.oracle.com/javase/7/docs/api/java/lang/System.html) 
 
-### Class LinkedList
-An implementation class of a linked list, containing several methods 
+### public String calculate( long n, long k ) ###
+Takes 2 longs (n and k) and preforms the main calculation and returns a string
 
-##### def insert_after
-A method that inserts a value at a specific index location
+#### Long.toUnsignedString 
+A method that returns a string representation of the argument as an unsigned decimal value.
 
-##### def delete_after
-A method that deletes a value at index (n+1) value location
+#### Long.divideUnsigned
+returns the unsigned quotient of dividing the first argument by the second where each argument and the result is interpreted as an unsigned value.
 
-#### def push_front
-A method that places a value at the start of the link list 
+#### Long.remainderUnsigned
+returns the unsigned remainder from dividing the first argument by the second where each argument and the result is interpreted as an unsigned value.
 
-#### def pop_front
-A method that removes a value at the front of link list
+#### Long.parseUnsignedLong
+compares two long values numerically. Parses the string argument as an unsigned decimal long.
 
-#### def push_back 
-A method that removes a value at the back of the link list
+### public String multiplyLong(long x, long y) ###
+Takes 2 longs (x and y) and returns the result of multpilying them together one digit at a time. The answer is stored as an array of digits and return type is String, since the answer may be greater than the maximum size for a signed long. 
 
-#### def pop_back
-A method that removes a value at the back of the link list
+**Adapted from:** https://stackoverflow.com/questions/35260827/implementing-multiplication-algorithm-in-java
 
-#### def traverse
-A method that moves to the specific index location of the link list
 
-#### def search
-A method that searches the link list for the specific value and display it on   
+### public boolean isAllDigit( String s )
+Takes in a string and returns a boolean as to weather it is a digit 
 
-### class AppWindow:
-Runs the main program and generates the graphical display on screen  
+### public long gcdByEuclidsAlgorithm(long n1, long n2)
+Takes 2 longs (n and k) and finds the greatest common divisor and returns a long
 
-## References & Resources  
-[Fahrenheit to Celsius Python GUI](https://https://www.youtube.com/watch?v=H1-6DfphTKQ&list=PL6lxxT7IdTxGoHfouzEK-dFcwr_QClME_&index=30)  
+**Adapted from:** https://www.baeldung.com/java-greatest-common-divisor
+
