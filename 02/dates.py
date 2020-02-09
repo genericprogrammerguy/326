@@ -1,4 +1,3 @@
-from datetime import *
 import fileinput
 import re
 import sys
@@ -6,56 +5,83 @@ import sys
 #valid_date = re.compile(r'^(([0]?[1-9])|([1-2][0-9])|(3[01]))$')
 #if valid_date.match(12):
 #    print("nice")
-
-def main():
-   while True:
-    input = input("Enter Date")
-            
-    check_day_format(input)
-    check_month_format(input)
-    check_year_format(input)
-    leap_year(input)
-    range_date(input)
-
+# date = "22 10/90"
+# res = re.split(r'[\-/\s]', date)
+# print(res)
+# exit(0)
+error = []
 def input_date():
-    for line in fileinput.input():
-        pass
+    #for line in fileinput.input():
+    #    pass
+    #date = input("Enter Date: ")
+    pass
 
-date = input("Enter Date: ") 
 
-def check_day_format(date):
-    day_RegEX = date
-    day_RegEX = re.compile("^(([0]?[1-9])|([1-2][0-9])|(3[01]))$");
-    if day_RegEX.match():
-        print("correct-Day")
+class DayFormat:
+def check_day_format(day):
+    if not (int):
+        return False
     else:
-        print("wrong-Day")
-
-def check_month_format(date):
-    month_RegEx = date
-    month_RegEx = re.compile("((0[1-9]|1[0-2])/([01][1-9]|10|2[0-8]))|((0[13-9]|1[0-2])/(29|30))|((0[13578]|1[0-2])/31)");
-    if month_RegEx.match():
-        print("correct-Month")
+    if not (0 < day <= 31):
+        #if leap year then
+        return False
     else:
-        print("wrong-Month")
-
-def check_year_format(date):
-    year_RegEx = date  
-    year_RegEx = re.compile("(?<!\d)\d{2}{4}(?!\d)");
-    if year_RegEx.match():
-        print("correct-Year")
+    if(day > 2):
+        return False
     else:
-        print("wrong-Year")
+        return True
 
-def leap_year(date):
-    year = date
-    if year%4==0 and year%100 ==0:
-        if year%400 !=0:
-            print("valid year") 
+    # day_RegEx = re.compile("r^(([0]?[1-9])|([1-2][0-9])|(3[01]))$")
+    # if day_RegEx.match(day):
+    #     print("Yes")
+    #     return True
+    # else:
+    #     print("No")
+    #     return False
+        # append error
+    # if feb 29 and not leap year -> error
+    # if 31 and not 31 month -> error
+
+class MonthFormat:
+def check_month_format(month):
+    month_RegEx = re.compile("((0[1-9]|1[0-2])/([01][1-9]|10|2[0-8]))|((0[13-9]|1[0-2])/(29|30))|((0[13578]|1[0-2])/31)")
+    if month_RegEx.match(month):
+        return True
+    else:
+        return False
+
+class YearFormat:
+    def check_year_format(year):
+        year_RegEx = re.compile("(?<!\d)\d{4}(?!\d)")
+        if year_RegEx.match(year):
+            return True
         else:
-            print("invaild year")
+            return False
 
-def range_date(date):
-    year = date
-    if year < 1753 or year > 3000:
-        print ("out of range")
+    def leap_year(year):
+        print(year)
+        if year % 4 == 0 and (year % 400 == 0 or year % 100 != 0):
+            print("leap year")
+        else:
+            print("not leap year")
+
+    def range_date(year):
+        if 1753 < year > 3000:
+            return True
+        else:
+            return False
+
+if __name__ =='__main__':
+    for date in sys.stdin:
+        res = re.split(r'[\-/\s]', date)
+        try:
+        day, month, year, _ = res
+        except:
+
+        print(day)
+        error = []
+        check_day_format(int(day))
+        # check_month_format(month)
+        # check_year_format(year)
+        # leap_year(int(year))
+        #range_date(year)
