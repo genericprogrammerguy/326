@@ -15,36 +15,54 @@ from turtle import Screen, Turtle
 #          Order1
 # n is the order of magnitude
 
-def hilbert_curve(turtle, x, y, xi, xj, yi, yj, n)
-    # recursive call
-    if n <= 0:
-        return
-        x = (x + (xi + yi)/2)
-        y = (y + (xj + yj)/2)
+# def hilbert_curve(t,x, y, xi, xj, yi, yj, n):
+#     # recursive call
+#     if n < 1:
+#         return
+#         x = x + (xi + yi)/2
+#         print("X")
+#         y = y + (xj + yj)/2
+#         print("Y")
+#     else:
+#         # Point A
+#         hilbert_curve(t,    x,      y,      yi/2,   yj/2,   xi/2,   xj/2,   n - 1)
+#         t.forward(10)
+#         print("pointA")
+#         # Point B
+#         t.left(x * 90)
+#         hilbert_curve(t,    x +     xi/2,   y +     xj/2,   xi/2,   xj/2,   yi/2, yj/2, n - 1)
+#         t.forward(10)
+#         print("pointB")
+#         # Point C
+#         t.left(y * 90)
+#         hilbert_curve(t,    x +     xi/2 +  yi/2,   y +     xj/2 +  yj/2,   xi/2, xj/2, yi/2, yj/2, n - 1)
+#         print("pointC")
+#         t.forward(10)
+#         # Point D
+#         t.left(x * 90)
+#         hilbert_curve(t,    x +     xi/2 +  yi,     y +     xj/2 +  yj,     -yi/2,-yj/2,-xi/2, -xj/2, n - 1)
+#         print("pointD")
+
+
+
+def hilbert(dir, rot, order):
+
+
+
+def rescale():
+    turtle.reset()
+    screen.setworlscoordinates()
+    hilbert_curve()
+    screen.update()
+    screen.ontimer(rescale)
+    pass
     
-    else:
-        turtle.left(y * 90)
-        # Point A
-        hilbert_curve(turtle, x, y, yi/2, yj/2, xi/2, xj/2, n - 1)
 
-        turtle.foward(x)
+if __name__ =="__main__":
+    s = Screen()
+    t = Turtle()
 
-        turtle.right(y * 90)
-        # Point B
-        hilbert_curve(turtle, x + xi/2, y + xj/2, xi/2, xj/2, yi/2, yj/2, n - 1)
+    herbert(1,2,3)
+    # hilbert_curve(t,0.0, 0.0 ,1.0, 0.0, 0.0, 1.0, 4)
 
-        turtle.foward(x)
-
-        turtle.right(y * 90)
-        # Point C
-        hilbert_curve(turtle, x + xi/2 + yi/2, y + xj/2 + yj/2, xi/2, xj/2, yi/2, yj/2, n - 1)
-
-        turtle.foward(x)
-        # Point D
-        hilbert_curvet(turtle, x + xi/2 + yi, y + xj/2 + yj, -yi/2,-yj/2,-xi/2, -xj/2, n - 1)
-        turtle.left(x * 90)
-    
-    screen = Screen()
-    t = Turtle()   
-    hilbert_curve(t, 0.0, 0.0 ,1.0, 0.0, 0.0, 1.0, 2)
-    screen.exitonclick()
+    s.mainloop()
