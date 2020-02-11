@@ -3,88 +3,66 @@ import re
 import sys
 
 #valid_date = re.compile(r'^(([0]?[1-9])|([1-2][0-9])|(3[01]))$')
-#if valid_date.match(12):
-#    print("nice")
-# date = "22 10/90"
-# res = re.split(r'[\-/\s]', date)
-# print(res)
-# exit(0)
 
-monthDic = {1: 'JAN', 2: 'FEB', 3: 'MAR', 4: 'APR', 5: 'MAY', 6: 'JUN', 7: 'JUL', 8: 'AUG', 9: 'SEP', 10: 'OCT',
-         11: 'NOV', 12: 'DEC'}
 
 month_RegEx = re.compile(r'^(0?[1-9]|[1][02]|JAN|Jan|FEB|Feb|MAR|Mar|APR|Apr|MAY|May|JUN|Jun|JUL|Jul|AUG|Aug'
   r'|SEP|Sep|OCT|Oct|NOV|Nov|DEC|Dec)$')
 
 
-error = []
+#error = []
 
-#class DayFormat:
-# int = 01
 def check_day_format(day):
-    # if 0 < day <= 31:
-    #     # print("correct digits")
-    #     return True
-    # else:
-    #     return False
+    """
+    A method that checks the day format between the ranges of 01-31
+    DayFormat: DD or D or 0D
+
+    :param day:
+    :return boolean: Whether or not the day is within the correct range
+    """
     day_RegEx = re.compile(r'^(0?[1-9]|[1][0-9]|[2][0-9]|[3][0-1])$')
     if day_RegEx.match(day):
         return True
     else:
-        print("wrong day range")
+        print("Wrong day range")
         return False
 
-
-
-#class MonthFormat: MM or M or 0M or first 3 letters MMM
 def check_month_format(month):
+    """
+    A method that checks the month format
+    MonthFormat: MM or M or 0M or first 3 letters MMM
+
+    :param month:
+    :return boolean: Whether or not the month is in the correct format
+    """
     if month_RegEx.match(month):
         return True
-        # print("correct month")
     else:
         return False
-        # print("wrong month")
-    # if len(month) >=3:
-    #     print("Too many digits-month")
-    #     return False
-    # else:
-    #     print("Correct digits")
-    #     return True
 
-    # only up to 12
-    # if month is string
-    #     check >4 char
-    #     Check month aginast monthDic
-    #
-    #     monthConverter()
-    # check reference dictionary of months (3 Letters)
-        # check consist of alphabetic
-        # invalid month
-        # invalid number of Char(3)
-
-        # Not # letters
-
-
-#class YearFormat:
 def check_year_format(year):
-    # year_RegEx = re.compile(r'\d{4}$')
-    # is_two_digits = re.compile(r'\d{2}')
-    # if year_RegEx.match(year) and 1753 <= int(year) <= 3000:
-    #     print("correct year")
-    #     return True
-    # else:
-    #     print("wrong year")
-    #     return False
+    """
+    A method that checks the year format
+    YearFormat: YY or YYYY
+
+    :param year:
+    :return boolean: Whether or not the year is the correct format
+    """
     if len(year) == 4 and 1753 <= int(year) <= 3000:
         return True
     else:
         if len(year) == 2: # is_two_digits.match(year)
             return True
         else:
-            print("wrong year")
+            print("Wrong year")
             return False
 
 def leap_year(year):
+    """
+    A method that checks if it is a leap year or not
+
+    :param year:
+    :return boolean: Whether or not it is a leap year
+    """
     year_int = year
     is_two_digits = re.compile(r'\d{2}')
     if is_two_digits.match(year):
@@ -98,77 +76,99 @@ def leap_year(year):
     else:
         return False
 
-def range_date(year):
-    if 1753 < year > 3000:
-        print("out of range")
-        return True
-        print("in range")
-    else:
-        return False
-    if 00 <= year >= 99:
-        print("in range")
-    else:
-        print("out range")
+# def range_date(year):
+#     """
+#     A method that checks if the year falls within the correct range
+#
+#     :param year:
+#     :return boolean: Whether or not its within the correct range
+#     """
+#     if 1753 < year > 3000:
+#         print("out of range")
+#         return True
+#         print("within range")
+#     else:
+#         return False
+#     if 00 <= year >= 99:
+#         print("win range")
+#     else:
+#         print("out of range")
 
 
 def is_29_feb(day, month):
-    # try:
-    #     cvt = int(month)
-    #     if cvt == 2:
-    #         return True
-    # except ValueError:
-    #     pass
+    """
+    A method that accounts for the 29 of Feb, and if it is in the correct format
+    DayFormat_29: DD
 
+    :param day:
+    :param month:
+    :return boolean: whether of not it is a leap year
+    """
     feb_regex = re.compile(r'^(0?[2]|FEB|Feb)$')
-    # day_RegEx = re.compile(r'^(0?[2])$')
     if feb_regex.match(month) and 29 == int(day):
         return True
     else:
         return False
 
 
-def check_day_range(day, month):
+def check_day_range(day, month, year):
     """
-    Returns True if range is wrong
+    Checks if day is within valid range and accounts for Feb29(leap years)
+
     :param day:
     :param month:
-    :return:
+    :return boolean: whether its within correct range
     """
-    # april 4 , june 6 , sep, 9  nov 11
     thirty_month = re.compile(r'^(0?[4]|0?[6]|0?[9]|11|APR|Apr|JUN|Jun|SEP|Sep|NOV|Nov)$')
     feb_regex = re.compile(r'^(0?[2]|FEB|Feb)$')
     below_29 = re.compile(r'^(0?[1-9]|[1][0-9]|[2][0-8])$')
     below_31 = re.compile(r'^(0?[1-9]|[1][0-9]|[2][0-9]|30)$')
 
     if (thirty_month.match(month) and not(below_31.match(day))) or (feb_regex.match(month) and not(below_29.match(day))):
-        return True
+        if is_29_feb(day, month) and leap_year(year):
+            return False
+        else:
+            return True
     else:
         return False
 
 
+curr_date = ""
 
-if __name__ =='__main__':
-    print("Date:")
+def main():
+    """
+    Main driver control of program. Prompts user for input
+    Control flow of program is to split the 'day', 'month' and 'year'
+    and then passes each value to the respective methods which checks
+    both the format and conditions of each
+
+    :return: None
+    """
+    print("Enter Date:")
     for date in sys.stdin:
         if date[0] == ' ':
-            print("starts with white space")
+            print("Starts with white space")
             continue
         date = date.strip('\n')
         res = re.split(r'[\-/\s]', date)
+        curr_date = date
         try:
             day, month, year = res
         except ValueError:
-            print("wrong seperator")
+            print("Wrong Separator or unsupported format")
             continue
+        try:
+            (len(res) == 3)
+        except ValueError:
+            print("Wrong input")
 
         if check_day_format(day) and check_month_format(month) and check_year_format(year):
-            if is_29_feb(day, month) and not(leap_year(year)):
+            if is_29_feb(day, month) and not (leap_year(year)):
                 print("ERROR: year must be leap year")
-            elif check_day_range(day, month):
+            elif check_day_range(day, month, year):
                 print("wrong day range")
             else:
-                print("All is correct")
-    # leap years, months that are 30 or 31
-    #
-        #leap_year(int(year))
-        #range_date(int(year))
+                print("Correct")
+
+if __name__ =='__main__':
+    main()
