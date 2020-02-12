@@ -5,6 +5,7 @@ import sys
 #valid_date = re.compile(r'^(([0]?[1-9])|([1-2][0-9])|(3[01]))$')
 
 
+
 month_RegEx = re.compile(r'^(0?[1-9]|[1][02]|JAN|Jan|FEB|Feb|MAR|Mar|APR|Apr|MAY|May|JUN|Jun|JUL|Jul|AUG|Aug'
   r'|SEP|Sep|OCT|Oct|NOV|Nov|DEC|Dec)$')
 
@@ -23,7 +24,7 @@ def check_day_format(day):
     if day_RegEx.match(day):
         return True
     else:
-        print("Wrong day range")
+        print(day, "ERROR: Wrong day range")
         return False
 
 def check_month_format(month):
@@ -53,7 +54,7 @@ def check_year_format(year):
         if len(year) == 2: # is_two_digits.match(year)
             return True
         else:
-            print("Wrong year")
+            print(year, "ERROR: Wrong year")
             return False
 
 def leap_year(year):
@@ -147,15 +148,15 @@ def main():
     print("Enter Date:")
     for date in sys.stdin:
         if date[0] == ' ':
-            print("Starts with white space")
+            print(date, "ERROR: Starts with white space")
             continue
-        date = date.strip('\n')
+        date = date.strip('\n') # 50/50
         res = re.split(r'[\-/\s]', date)
         curr_date = date
         try:
             day, month, year = res
         except ValueError:
-            print("Wrong Separator or unsupported format")
+            print(date, "ERROR: Wrong Separator or unsupported format")
             continue
         try:
             (len(res) == 3)
@@ -164,9 +165,9 @@ def main():
 
         if check_day_format(day) and check_month_format(month) and check_year_format(year):
             if is_29_feb(day, month) and not (leap_year(year)):
-                print("ERROR: year must be leap year")
+                print(date, "ERROR: year must be leap year")
             elif check_day_range(day, month, year):
-                print("wrong day range")
+                print(date, "ERROR: wrong day range")
             else:
                 print("Correct")
 
