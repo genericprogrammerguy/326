@@ -1,71 +1,89 @@
-from turtle import Screen, Turtle
-
-
-#
-#            D----------------C
-#                             |
-#                             |
-#                             |
-#                             |
-#                             |
-#                             |
-#            A----------------B
-#
-#          Order1
-# n is the order of magnitude
-
-order = 6
+import turtle
+import sys
 
 def hilbert(t,dir, rot, order):
-    if( order == 0):
-        return
+    """
+    Is a method to recursively call the drawing of the Hilbert Curve
+
+    :param t: turtle
+    :param dir: direction
+    :param rot:  rotation
+    :param order: magnitude
+    :return: None
+    """
+    if( order == -1):
+            return
 
     # POINT A
     #dir = dir - rot
     t.right(rot * 90)
-    print("(R)")
+    #print("(R)")
     hilbert(t, dir, - rot, order - 1)
     t.forward(dir)
-    print("F")
+    #print("F")
     
     # POINT B
     #dir = dir - rot
     t.left(rot * 90)
-    print("((L))")
+    #print("((L))")
     hilbert(t, dir,  rot, order - 1)
     t.forward(dir)
-    print("F")
+    #print("F")
 
     #POINT C
     #dir = dir - rot
-    print("(((L)))")
+    #print("(((L)))")
     hilbert(t, dir,  rot, order - 1)
     t.left(rot * 90)
     t.forward(dir)
-    print("F")
+    #print("F")
 
     # POINT D
     #dir = dir - rot
     hilbert(t, dir, - rot, order - 1)
     t.right(rot * 90)
-    print("((((R))))")
+    #print("((((R))))")
 
-def rescale():
-    t.reset()
-    t.speed("fastest")
-    s.setworlscoordinates(0,0,2**order-1,2**order-1)
-    hilbert(t, length, rot, order)
-    s.update()
-    s.ontimer(rescale, 1000)
+def rescale(x,y):
+    """
+    A method to rescale the screen and hilbert curve
+
+    :return: None
+    """
+    t.reset() #resets x & y
+    t.clear() #clears screen of any drawing
+    s = t.getscreen() # gets screen
+    #t.speed("fastest")
+    s.setworldcoordinates(0,0,(2**order-1),-(2**order-1))
+    t.goto(0,0)
+    hilbert(t, 1, 1, order)
+    #hilbert(t, 1, 1, order)
+
 
 def main():
-    length = 100/(4*order-1)
-    s = Screen()
+    """
+    Main method
+    Main driver of program. Prompts user for input of the order of magnitude for hilbert curve
+    The sets the turtle environment up and then recursively draws the hilbert curve while also
+    rescaling the screen
+
+    :return: None
+    """
+    print("Enter Magnitude of Hilbert Curve:")
+    global order
+    order = int(input())
+    global t
+    t = turtle.Turtle()
+    #t.hideturtle()
+    s = t.getscreen()
     s.tracer(False)
-    t = Turtle()
-
-    hilbert(t, 10, 1, order)
-
+    #print(turtle.turtles())
+    t.left(90)
+    hilbert(t, 1, 1, order)
+    rescale(0,0)
+    s.listen()
+    #s.ontimer(rescale, 100)
+    s.onclick(rescale)
     s.mainloop()
 
 if __name__ =="__main__":
