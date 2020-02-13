@@ -1,7 +1,9 @@
 import fileinput
 import re
 import sys
-
+import datetime
+import time
+import calendar
 #valid_date = re.compile(r'^(([0]?[1-9])|([1-2][0-9])|(3[01]))$')
 
 
@@ -67,7 +69,7 @@ def leap_year(year):
     year_int = year
     is_two_digits = re.compile(r'\d{2}')
     if is_two_digits.match(year):
-        if 59 <= int(year) <= 99:
+        if 49 <= int(year) <= 99:
             year_int = 1900 + int(year)
         else:
             year_int = 2000 + int(year)
@@ -162,14 +164,33 @@ def main():
             (len(res) == 3)
         except ValueError:
             print("Wrong input")
-
         if check_day_format(day) and check_month_format(month) and check_year_format(year):
             if is_29_feb(day, month) and not (leap_year(year)):
                 print(date, "ERROR: year must be leap year")
             elif check_day_range(day, month, year):
                 print(date, "ERROR: wrong day range")
             else:
-                print("Correct")
+                if len(day) == 1:
+                    day = '0' + day
+                if month[0] == '0':
+                    month = month[1]
+                try:
+                    month = int(month)
+                    month = calendar.month_name[month]
+                except ValueError:
+                    # month = month.lower()
+                    month = month[0].upper() + month[1:].lower()
+                    month
+                if len(year) == 2:
+                    if 49 <= int(year) <= 99:
+                        year = 1900 + int(year)
+                    else:
+                        year = 2000 + int(year)
+                print(day, month[0:3], year)
+
+
+
+
 
 if __name__ =='__main__':
     main()
