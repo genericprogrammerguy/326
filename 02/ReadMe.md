@@ -12,6 +12,7 @@
 | -------- | -------- | -------- |
 | **1.0**     | 11-02-2020    | First version   |
 | **1.1**     | 13/02/2020    | Slight adjustments to error messages +  print out what is wrong as per etude 
+| **1.2**     | 13/02/2020    | Adjustments made to print out of date as per etude
 
 
 ## Introduction
@@ -59,7 +60,9 @@ A method that accounts for the 29 of February, and if it is in the correct forma
 Checks if day is within valid range and accounts for February 29(leap years)
   
 ### def main():
-Main driver control of program. Prompts user for input Control flow of program is to split the 'day', 'month' and 'year'and then passes each value to the respective methods which checks both the format and conditions of each. preforms a number of checks
+Main driver control of program. Prompts user for input Control flow of program is to split the 'day', 'month' and 'year'and then passes each value to the respective methods which checks both the format and conditions of each. preforms a number of checks prints out error message otherwise 
+
+**Outputs:** 0D MMM YYYY
 
 ## References
 [1]YouTube. (2020). Python Tutorial: re Module - How to Write and Match Regular Expressions (Regex). [online] Available at: https://www.youtube.com/watch?v=K8L6KVGG-7o&t=2800s&app=desktop [Accessed 28 Jan. 2020].
