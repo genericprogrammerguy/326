@@ -1,4 +1,5 @@
 import sys
+import socket
 
 # valid email addresses should have the following format:
 # Converts to lower case
@@ -25,16 +26,40 @@ import sys
 
 
 def split_email():
-
-    mailbox=re.split(r'^\w+@|\w_at_')
-    domain = re.split()
+    mailbox=re.compile(r'^\w+@|\w_at_')
+    domain = re.compile(r'')
     #extension =re.split()
 
-def format():
+
+def reformat(email):
+    for x in email:
+        email.replace('_at_', '@')
+        email.replace('_dot_', '.')
+        if(email != email.lower):
+            email = email.lower()
+            return email
+
+def format(email):
+    if len(email) < 1:
+        print(' <- Mailbox name is too short')
+        return False
+    elif(email != email.isalnum):
+        print(' <- not alphanumeric')
+        return False
+    elif(email =='@@'):
+        print(' <- Invalid format')
+        return False
+    elif(email ==  '-_'):
+        print(' <- consecutive separators')
+        return False
+    # elif (email.split('.'):
+    #     print(' <- Invalid mailbox name')
+    #     return False
+
+def checkmail_name(email):
+    pass
     pass
 
-def checkmail_name():
-    pass
 
 def check_domain():
     pass
@@ -42,8 +67,8 @@ def check_domain():
 def check__extension():
     pass
 
-def switch(domain):
-    domain = {
+def switcher(domain):
+    domain == {
     1: "co.nz",
     2: "com.au",
     3: "co.ca",
@@ -53,15 +78,15 @@ def switch(domain):
     }
     return domain
 
-
-def main()
-    print("Enter email:")
-    for date in sys.stdin:
-        if date[0] == ' ':
+def main():
+    while True:
+        email = input("Enter email:")
+        if email[0] == '  ':
             print("Starts with white space")
-            continue
-        email = email.strip('\n')
-        res = re.split(r'')
+            while format(True):
+                
+                print(email)
+                return
 
 if __name__ =='__main__':
     main()
