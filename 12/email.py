@@ -1,116 +1,95 @@
 import sys
-import socket
+import re
+
+domain_RegEx = re.compile(r'(\.co\.nz|\.com\.au|\.co\.ca|\.co\.uk|\.com|\.co\.us)$')
+mailbox = re.compile(r'^[a-zA-Z0-9\.]+$')
+mailbox_sep = re.compile(r'[-\._]')
+valid_ip = re.compile(r'^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.|$)){4}$')
 
 # valid email addresses should have the following format:
+#
 # Converts to lower case
 # A mailbox name
-# An "@" symbol
+# An “@” symbol
 # A domain name
 # A dot(".")
 # A domain extension
+# Mailbox and domain names must alphanumeric
+# multiple parts separated by single dots (".").
+# Parts of the mailbox name may be similarly separated by single hyphens ( “-” )and/or underscores ("_")
+# “dot” should be “.”
+# “at” should be “@”
 
-#domain = thisdict{ "co.nz"  "com.au" , "co.ca" , "co.uk" , "com" , "co.us"}
 
-def split_email(email):
-    mailbox_RegEX=re.compile(r'^\w+@')
-    if(mailbox_RegEX.match == mailbox):
-        return True
-    else:
-        print(' <- Invalid: not a correct mailbox')
+def is_alphanumeric(s):
+    if s == '':
         return False
-
-    domain_RegEx = re.compile(r'(co.nz|com.au|co.ca|co.uk|com|co.us)')
-    if (domain_RegEX.match == domain):
-        return True
-    else:
-        print(' <- Invalid: not a correct domain')
+    if not mailbox.match(s):
         return False
+    return True
 
-    #extension =re.split()
-
-
-def reformat(email):
-    for x in email:
-        email.replace('_at_', '@')
-        email.replace('_dot_', '.')
-        if(email != email.lower):
-            email = email.lower
-            return email
-
-def check_format(email):
-    if len(email) < 1:
-        print(' <- Invalid: mailbox name is too short')
-        return False
-    elif(email != email.isalnum):
-        print(' <- Invalid: not alphanumeric')
-        return False
-    elif(email =='@@'):
-        print(' <- Invalid: format')
-        return False
-    elif(email ==  '-_'):
-        print(' <- Invalid: consecutive separators')
-        return False
-    # elif (email.split('.'):
-    #     print(' <- Invalid mailbox name')
-    #     return False
-
-def checkmail_name(email):
-    pass
-
-def checkIP(ip):
-    ips = ip.split('.')
-    if len(ips) != 4:
-        print('<- Invalid: IP must be IPv4')
-        return False
-    for i in ips:
-        i = int(i)
-        if i > 256:
-            print('<- Invalid: IP address < 256')
-            return False
-        else:
-            print('<- Invalid: IP must be numerical')
-            return False
-
-def check__extension():
-    pass
-    # if email ==domain {
-    # 1: "co.nz",
-    # 2: "com.au",
-    # 3: "co.ca",
-    # 4: "co.uk",
-    # 5: "com",
-    # 6: "co.us"
-    # }
-    # return domain
-    # else:
-    # print('<- wrong domain')
+def two_ats(s):
+    found = 0
+    for c in s:
+        if c == '@':
+            found += 1
+        if found >= 2:
+            return True
+    return False
 
 def main():
-    # while True:
-    # email = input("Enter email:")
-    email = []
-    #print("Enter email:")
-    if sys.stdin.isatty():
-        while True:
-            email = raw_input('Enter email to test: ')
-            data.append(email)
-            # reads from file for testing:
-            for line in sys.stdin:
-                line.replace('\n', '')
-                data.append(email)
-                #for email in sys.stdin:
-                #email.replace('\n', '')
-                if email[0] == '  ':
-                    print("Starts with white space")
-                    # while format(True):
-                    email = email.strip('\n')
-                    print(email)
-                    check_format(email)
-                    print(email)
-                    reformat(email)
-                     #checkIP()
-                    print(email)
-                    break
+    """
+    Main driver control of program. Prompts user for input
+    Control flow of program is to first replace formatting issues
+    in the inputted email. It then splits and tests to see if the
+    domain extension is correct. The mailbox is then then split and is
+    tested if alphanumeric and other email format exceptions
+
+    :return: None
+    """
+    print("Enter email:")
+    for email in sys.stdin:
+        email = email.strip("\n")
+        # email = "t.co.nz"
+        skip = False
+        if "_dot_" in email:
+            email = email.replace("_dot_", ".")
+        if "_at_" in email:
+            email = email.replace("_at_", "@")
+        if "@" not in email:
+            print(email, "<-- Missing '@' Symbol")
+            continue
+        if two_ats(email):
+            print(email, "<-- Multiple '@' Symbol")
+            continue
+        end = email.split("@")[1]  # gets end after @
+        if not domain_RegEx.search(email) and not(end.startswith('[') and end.endswith(']')):
+            print(email, "<-- Incorrect domain extension")
+            continue
+
+        mailbox_name = email.split("@")[0]
+        split_name = mailbox_sep.split(mailbox_name)
+        for name in split_name:
+            if not is_alphanumeric(name):
+                print(email, "<-- Invalid Mailbox name")
+                skip = True
+                break
+        if skip:
+            continue
+        if end.startswith('[') and end.endswith(']') and valid_ip.match(end[1:-1]):
+            #print(email)
+            continue
+        else:
+            #print(email, "<-- Invalid domain name")
+            domain_name = domain_RegEx.split(end)[0] # get the domain name
+            domain_name = domain_name.split('.')[0] # split on valid separator value
+            if not is_alphanumeric(domain_name):
+                print(email, "<-- Invalid domain name")
+                continue
+
+        print(email)
+        # replace _dot_ with . and replace _at_ with @
+        # if wrong extension -> output error
 
 if __name__ =='__main__':
     main()
