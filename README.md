@@ -13,3 +13,5 @@
 12	[EMAIL ADDRESSES](https://www.cs.otago.ac.nz/cosc326/2020SS/etude12.pdf)<br/>
 13	[RATIONAL THINKING](https://www.cs.otago.ac.nz/cosc326/2020SS/etude13.pdf)<br/>
 14	[SUPER SIZE IT](https://www.cs.otago.ac.nz/cosc326/2020SS/etude14.pdf)<br/>
+
+NOTE:[https://www.otago.ac.nz/study/academicintegrity/]
